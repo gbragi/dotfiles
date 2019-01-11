@@ -1,0 +1,26 @@
+# Custom aliases
+alias g=git
+alias gu='git add . && git commit && git push'
+alias gs='git status'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit --amend'
+alias gcan='git commit --amend --no-edit'
+alias gp='git pull'
+alias gpr='git pull --rebase'
+alias grbc='git rebase --continue'
+
+alias k='kubectl'
+alias kwp='watch kubectl get pods'
+alias kwpa='kwp --all-namespaces'
+alias kws='watch kubectl get services'
+alias kwsa='watch kubectl get services --all-namespaces'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '~/tools/google-cloud-sdk/path.zsh.inc' ]; then . '~/tools/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '~/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '~/tools/google-cloud-sdk/completion.zsh.inc'; fi
+
+# The next line enables azure cli completion
+if [ -f '~/tools/azure-cli/az.completion' ]; then . '~/tools/azure-cli/az.completion'; fi

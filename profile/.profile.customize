@@ -1,0 +1,23 @@
+export BROWSER=/usr/bin/firefox
+export PATH=$PATH:~/tools
+export PATH=$PATH:~/tools/flutter/bin
+export PATH=$PATH:~/go/bin
+export PATH=$PATH:/usr/local/kubebuilder/bin
+export PATH=$PATH:~/Android/Sdk/platform-tools
+export PATH=$PATH:/snap/bin
+
+export GOPATH=~/go
+# export GO111MODULE=on
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
+
+# Allow user-wide installations using npm
+export PATH=$PATH:~/.node_modules/bin
+export npm_config_prefix=~/.node_modules
+
+# Goolge Cloud Python Sdk
+export CLOUDSDK_PYTHON=python2
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"

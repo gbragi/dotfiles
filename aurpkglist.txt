@@ -1,0 +1,3 @@
+kubectl-bin
+kubernetes-helm-bin
+insomnia

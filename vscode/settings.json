@@ -1,0 +1,45 @@
+{
+    "files.autoSave": "afterDelay",
+    "editor.lineNumbers": "relative",
+    "editor.wordWrap": "on",
+    "git.autofetch": true,
+    "vim.leader": "<space>",
+    "vim.useSystemClipboard": true,
+    "vim.easymotion": true,
+    "vim.insertModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "j"
+            ],
+            "after": [
+                "g",
+                "j"
+            ]
+        },
+        {
+            "before": [
+                "k"
+            ],
+            "after": [
+                "g",
+                "k"
+            ]
+        }
+    ],
+    "gitlens.advanced.messages": {
+        "suppressShowKeyBindingsNotice": true
+    },
+    "extensions.ignoreRecommendations": true,
+    "typescript.updateImportsOnFileMove.enabled": "always"
+}
