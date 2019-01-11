@@ -99,11 +99,13 @@ if [ "$RUNDOTFILES" = true ]; then
     echo "Setting up dotfiles..."
     CONFIG_DIR="$HOME/.config"
     VSCODE_DIR="$CONFIG_DIR/Code - OSS/User"
+    BACKUP_DIR="./backup"
     I3_DIR="$HOME/.i3"
-    I3_BACKUP="./backup/i3_backup_config"
+    I3_BACKUP="$BACKUP_DIR/i3_backup_config"
     I3_CONFIG="$I3_DIR/config"
     PROFILE_CONFIG="$HOME/.profile"
-    PROFILE_BACKUP="./backup/profile_backup"
+    PROFILE_BACKUP="$BACKUP_DIR/profile_backup"
+    mkdir -p "$BACKUP_DIR"
     
     echo stow vscode
     mkdir -p "$VSCODE_DIR"
@@ -113,13 +115,6 @@ if [ "$RUNDOTFILES" = true ]; then
     stow vim -t "$HOME"
 
     echo stow zshrc
-    if [ ! -f ~/.zshrc ]; then
-        touch ~/.zshrc
-    fi
-    if ! grep -q 'zshrc-custom.zshrc' ~/.zshrc; then
-        echo "# Customize zshrc" >> ~/.zshrc
-        echo ". ~/.zshrc-custom.zshrc" >> ~/.zshrc
-    fi
     stow zsh -t "$HOME"
 
     echo "################### zsh config diff #######################"
@@ -133,7 +128,7 @@ if [ "$RUNDOTFILES" = true ]; then
     stow redshift -t "$CONFIG_DIR"
     
     if [ -f "$PROFILE_CONFIG" ] && [ ! -L "$PROFILE_CONFIG" ]; then
-        mv "$PROFILE_CONFIG" "$PROFILE_BACKUP"
+        cp "$PROFILE_CONFIG" "$PROFILE_BACKUP"
     fi
     
     echo stow profile
@@ -171,8 +166,8 @@ fi
 # Disable caps lock and bind hjkl to arrow keys
 if [ "$RUNKEYBOARD" = true ]; then
     echo stow keyboard layout
-    sudo mv -vn /usr/share/X11/xkb/symbols/us ./backup/us_backup
-    sudo mv -vn /usr/share/X11/xkb/symbols/is ./backup/is_backup
+    sudo mv -vn /usr/share/X11/xkb/symbols/us "$BACKUP_DIR/us_backup"
+    sudo mv -vn /usr/share/X11/xkb/symbols/is "$BACKUP_DIR/is_backup"
     sudo stow keyboard -t /usr/share/X11/xkb/symbols
 fi
     
