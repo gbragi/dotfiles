@@ -9,11 +9,11 @@ if [[ $EUID = 0 ]]; then
 fi
 
 usage () {
-	echo "Usage: --help, --default, --update, --aur, --pacman, --zsh, --dotfiles, --code, --dir, --flutter, --microk8s, --skip-aur, --keyboard"
+	echo "Usage: --help, --default, --update, --aur, --pacman, --zsh, --dotfiles, --code, --dir, --flutter, --microk8s, --skip-aur, --keyboard, --ble-auto"
     exit 1
 }
 
-TEMP=`getopt -o '' --long help,default,update,aur,pacman,zsh,dotfiles,code,dir,flutter,microk8s,skip-aur -n 'test.sh' -- "$@"`
+TEMP=`getopt -o '' --long help,default,update,aur,pacman,zsh,dotfiles,code,dir,flutter,microk8s,skip-aur,ble-auto -n 'test.sh' -- "$@"`
 eval set -- "$TEMP"
 
 TOOLS_DIR="$HOME/tools"
@@ -26,6 +26,7 @@ initdefault() {
     RUNDOTFILES=$1
     RUNCODE=$1
     RUNDIR=$1
+    RUNBLUETOOTHAUTOCONNECT=$1
 }
 
 initupdate() {
@@ -55,6 +56,7 @@ while true; do
         --flutter) RUNFLUTTER=true; shift ;;
         --keyboard) RUNKEYBOARD=true; shift ;;
         --microk8s) RUNMICROK8S=true; shift ;;
+        --ble-auto) RUNBLUETOOTHAUTOCONNECT=true; shift ;;
         --) shift ; break ;;
         *) usage ;;
     esac
@@ -160,6 +162,24 @@ if [ "$RUNDOTFILES" = true ]; then
     echo $(find $HOME -path ~/go -prune -o -xtype l)
     
     echo "All clear...good to go"
+fi
+
+
+# Enable bluetooth auto connect
+if [ "$RUNBLUETOOTHAUTOCONNECT" = true ]; then
+    PULSE_CONFIG="/etc/pulse/default.pa"
+    COMMAND="load-module module-switch-on-connect"
+    if [ -f "$PULSE_CONFIG" ] && ! grep -q "$COMMAND" "$PULSE_CONFIG"; then
+        echo -e "\n# automatically switch to newly-connected devices" | sudo tee --append "$PULSE_CONFIG"
+        echo "$COMMAND" | sudo tee --append "$PULSE_CONFIG"
+    fi
+
+    BLE_CONFIG="/etc/bluetooth/main.conf"
+    COMMAND="AutoEnable=true"
+    if [ -f "$BLE_CONFIG" ] && ! grep -q "$COMMAND" "$BLE_CONFIG"; then
+        echo -e "\n#power on bluetooth adapter after reboot" | sudo tee --append "$BLE_CONFIG"
+        echo "$COMMAND" | sudo tee --append "$BLE_CONFIG"
+    fi
 fi
 
 
