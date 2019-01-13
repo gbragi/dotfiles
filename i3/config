@@ -44,7 +44,7 @@ bindsym $mod+z exec --no-startup-id morc_menu
 
 exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-exec --no-startup-id pulseaudio
+#exec --no-startup-id pulseaudio
 #exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
@@ -215,9 +215,8 @@ for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 
 ## Keyboard Layout
-exec "setxkbmap -layout us,is"
-exec "setxkbmap -option 'grp:win_space_toggle'"
-exec "xset -b"
+exec --no-startup-id "setxkbmap -layout us,is -option 'grp:win_space_toggle'"
+exec --no-startup-id "xset -b"
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus

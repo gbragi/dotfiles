@@ -197,6 +197,7 @@ esac
 
 
 # Custom aliases
+if [ -x "$(command -v hub)" ]; then eval "$(hub alias -s)"; fi
 alias g=git
 alias gu='git add . && git commit && git push'
 alias gs='git status'

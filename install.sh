@@ -100,6 +100,8 @@ fi
 if [ "$RUNDOTFILES" = true ]; then
     echo "Setting up dotfiles..."
     CONFIG_DIR="$HOME/.config"
+    SYSTEMD_USER_DIR="$CONFIG_DIR/systemd/user"
+    SSH_CONFIG_DIR="$HOME/.ssh"
     VSCODE_DIR="$CONFIG_DIR/Code - OSS/User"
     BACKUP_DIR="./backup"
     I3_DIR="$HOME/.i3"
@@ -108,6 +110,7 @@ if [ "$RUNDOTFILES" = true ]; then
     PROFILE_CONFIG="$HOME/.profile"
     PROFILE_BACKUP="$BACKUP_DIR/profile_backup"
     mkdir -p "$BACKUP_DIR"
+    mkdir -p "$SYSTEMD_USER_DIR"
     
     echo stow vscode
     mkdir -p "$VSCODE_DIR"
@@ -155,7 +158,12 @@ if [ "$RUNDOTFILES" = true ]; then
     echo "################### i3 config diff #######################"
     diff "$I3_BACKUP" "$I3_CONFIG" --color=always || true
     echo "##########################################################"
-    
+
+    echo stow ssh config
+    stow ssh -t "$SSH_CONFIG_DIR"
+    stow ssh-agent-service -t "$SYSTEMD_USER_DIR"
+    stow ssh-agent-env -t "$HOME"
+    systemctl --user enable --now ssh-agent
     
     # Do a check for all broken symlinks in home directory and print to stdout
     echo "Listing all broken symlinks"
