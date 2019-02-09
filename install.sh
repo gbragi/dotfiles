@@ -203,23 +203,7 @@ fi
 # Install vs code extensions
 if [ "$RUNCODE" = true ]; then
     echo "Installing vs code extensions"
-    declare -a extensions=("vscodevim.vim"
-    "ms-python.python"
-    "ms-vscode.csharp"
-    "ms-vscode.Go"
-    "eamodio.gitlens"
-    "eg2.tslint"
-    "PeterJausovec.vscode-docker"
-    "esbenp.prettier-vscode"
-    "redhat.vscode-yaml"
-    "Dart-Code.dart-code"
-    "Dart-Code.flutter"
-    "joaompinto.asciidoctor-vscode"
-    "zxh404.vscode-proto3"
-    "pflannery.vscode-versionlens"
-    "christian-kohler.path-intellisense"
-    "hbenl.vscode-firefox-debug"
-    )
+    readarray -t extensions < ./vscode-extensions.txt
 
     for i in "${extensions[@]}"
     do

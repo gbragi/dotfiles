@@ -159,6 +159,8 @@ function ga () { git add }
 
 function gc () { git commit }
 
+function gp () { git pull }
+
 function gd() { git diff }
 
 function gu() {
