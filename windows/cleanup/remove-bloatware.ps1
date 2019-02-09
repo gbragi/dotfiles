@@ -140,5 +140,5 @@ foreach ($app in $apps) {
 
 $onedrive_setupfile = "C:\Windows\SysWOW64\OneDriveSetup.exe"
 if(Test-Path -Path $onedrive_setupfile) {
-    $onedrive_setupfile /uninstall
+    & $onedrive_setupfile /uninstall
 }

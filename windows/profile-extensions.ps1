@@ -155,19 +155,15 @@ del alias:gp -Force
 
 function gs() { git status }
 
-function ga () { git add }
+function ga () { git add $args[0] }
+
+function amend () { git commit --amend --no-edit }
 
 function gc () { git commit }
 
 function gp () { git pull }
 
 function gd() { git diff }
-
-function gu() {
-        git add .
-        git commit
-        git push
-}
 
 Set-Alias k kubectl
 
