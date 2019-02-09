@@ -1,7 +1,5 @@
-# Get Updates
-Install-WindowsUpdate -acceptEula
-
-if (Test-PendingReboot) { Invoke-Reboot }
+# To Run
+# start http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/gbragi/dotfiles/master/windows/boxstarter.ps1
 
 # Configure Windows
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
@@ -245,3 +243,8 @@ foreach ($service in $services) {
     Write-Output "Trying to disable $service"
     Get-Service -Name $service | Set-Service -StartupType Disabled
 }
+
+# Get Updates
+Install-WindowsUpdate -acceptEula
+
+if (Test-PendingReboot) { Invoke-Reboot }
