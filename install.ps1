@@ -1,17 +1,4 @@
-param (
-    [switch]$user = $false,
-    [switch]$cleanup = $false,
-    [switch]$explorer = $false,
-    [switch]$vscode = $false,
-    [switch]$dotfiles = $false,
-    [switch]$apps = $false,
-    [switch]$powershelltheme = $false,
-    [switch]$bootstrap = $false,
-    [switch]$admin = $false,
-    [switch]$autohotkey = $false
-)
-
-function disable-services {
+function Disable-Services {
     # This script disables unwanted Windows services. If you do not want to disable
     # certain services comment out the corresponding lines below.
 
@@ -47,7 +34,7 @@ function disable-services {
     }
 }
 
-function remove-bloatware {
+function Remove-Bloatware {
     $apps = @(
         # default Windows 10 apps
         "Microsoft.3DBuilder"
@@ -193,51 +180,38 @@ function remove-bloatware {
     }
 }
 
-if ($bootstrap) {
-    $boxstarter = $true
-    $scoop = $true
-}
-
-if($admin){
-    $cleanup = $true
-    $explorer = $true
-    $dotfiles = $true
-}
-
-if ($user) {
-    $apps = $true
-    $powershelltheme = $true
-    $vscode = $true
-}
-
-if ($cleanup) {
-    Write-Host "Running cleanup..."
-    remove-bloatware
-    disable-services
-}
-
-if ($boxstarter) {
+function Install-Boxstarter {
     . { Invoke-WebRequest -useb https://boxstarter.org/bootstrapper.ps1 } | Invoke-Expression; get-boxstarter -Force
 }
 
-if ($scoop) {
-    Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
-
-    Write-Host "You may need to run: \nSet-ExecutionPolicy RemoteSigned -scope CurrentUser"
+function Install-Scoop {
+    $SCOOP_PATH = "$HOME\scoop\shims\scoop"
+    if (Test-Path $SCOOP_PATH) {
+        Write-Host "Scoop already installed at $SCOOP_PATH"
+    }
+    else {
+        Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
+    }
 }
 
-if ($apps) {
+function Install-ScoopApps {
+    scoop update
     scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nvm concfg
     scoop bucket add extras
     scoop update
-    scoop install autohotkey firefox vscode flux posh-git
+    scoop install vscode posh-git
+    Add-PoshGitToProfile
 }
 
-if ($powershelltheme) {
+function Install-ChocoApps {
+    cinst -y firefox autohotkey f.lux docker-desktop
+}
+
+function Install-PowershellTheme {
     concfg import vs-code-dark-plus
 }
 
-if ($explorer) {
+function Optimize-Explorer {
     Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
 
     Disable-BingSearch
@@ -246,19 +220,19 @@ if ($explorer) {
     Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
 }
 
-if ($vscode) {
+function Install-VscodeExtensions {
     Write-Host "Installing vscode extensions..."
     Get-Content .\vscode-extensions.txt | ForEach-Object {code --install-extension $_}
 }
 
-if ($dotfiles) {
+function Install-Dotfiles {
     Write-Host "Installing dotfiles..."
 
-    New-Item -Path $env:HOME\.gitconfig -ItemType SymbolicLink -Value .\git\.gitconfig -Force
+    New-Item -Path "$HOME\.gitconfig" -ItemType SymbolicLink -Value .\git\.gitconfig -Force
 
     New-Item -Path $env:APPDATA\Code\User\settings.json -ItemType SymbolicLink -Value .\vscode\settings.json -Force
 
-    New-Item -Path $env:HOME\.vimrc -ItemType SymbolicLink -Value .\vim\.vimrc -Force
+    New-Item -Path "$HOME\.vimrc" -ItemType SymbolicLink -Value .\vim\.vimrc -Force
 
     New-Item -Path $PROFILE -ItemType File -Force
     $PROFILE_DIR = (Get-Item $PROFILE).Directory.FullName
@@ -273,7 +247,25 @@ if ($dotfiles) {
     }
 }
 
-if ($autohotkey) {
+function Install-AutoHotkey {
     $STARTUP_DIR = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     New-Item -Path "$STARTUP_DIR\vim.ahk" -ItemType SymbolicLink -Value .\windows\vim.ahk
+
+    cinst -y autohotkey
+}
+
+function Start-EnvironmentBootstrap {
+    Install-Boxstarter
+    Remove-Bloatware
+    Disable-Services
+    Optimize-Explorer
+    Install-Dotfiles
+    Install-ChocoApps
+}
+
+function Start-EnvironmentConfig {
+    Install-Scoop
+    Install-ScoopApps
+    Install-PowershellTheme
+    Install-VscodeExtensions
 }
