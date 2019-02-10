@@ -3,10 +3,10 @@
 	email = 25616889+gbragi@users.noreply.github.com
 [core]
 	editor = vim
-[credential]
-        helper = manager
 [filter "lfs"]
         required = true
         clean = git-lfs clean -- %f
         smudge = git-lfs smudge -- %f
         process = git-lfs filter-process
+[credential]
+	helper = manager
