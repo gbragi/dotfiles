@@ -52,7 +52,7 @@ function remove-bloatware {
         # default Windows 10 apps
         "Microsoft.3DBuilder"
         "Microsoft.Appconnector"
-        "Microsoft.Advertising.Xaml" 
+        #"Microsoft.Advertising.Xaml" 
         "Microsoft.BingFinance"
         "Microsoft.BingNews"
         "Microsoft.BingSports"
@@ -227,14 +227,14 @@ if ($scoop) {
 }
 
 if ($apps) {
-    scoop install git-with-openssh grep curl sed tar touch which vim pshazz direnv dotnet-sdk nvm concfg
+    scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nvm concfg
     scoop bucket add extras
     scoop update
-    scoop install autohotkey firefox vscode
+    scoop install autohotkey firefox vscode flux posh-git
 }
 
 if ($powershelltheme) {
-    concfg import marrakesh
+    concfg import vs-code-dark-plus
 }
 
 if ($explorer) {
@@ -254,12 +254,13 @@ if ($vscode) {
 if ($dotfiles) {
     Write-Host "Installing dotfiles..."
 
-    New-Item -Path $env:HOME\.gitconfig -ItemType SymbolicLink -Value .\windows\.gitconfig -Force
+    New-Item -Path $env:HOME\.gitconfig -ItemType SymbolicLink -Value .\git\.gitconfig -Force
 
     New-Item -Path $env:APPDATA\Code\User\settings.json -ItemType SymbolicLink -Value .\vscode\settings.json -Force
 
     New-Item -Path $env:HOME\.vimrc -ItemType SymbolicLink -Value .\vim\.vimrc -Force
 
+    New-Item -Path $PROFILE -ItemType File -Force
     $PROFILE_DIR = (Get-Item $PROFILE).Directory.FullName
     New-Item -Path "$PROFILE_DIR\profile-extensions.ps1" -ItemType SymbolicLink -Value .\windows\profile-extensions.ps1 -Force
 
