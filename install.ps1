@@ -180,31 +180,33 @@ function Remove-Bloatware {
     }
 }
 
-function Install-Boxstarter {
-    . { Invoke-WebRequest -useb https://boxstarter.org/bootstrapper.ps1 } | Invoke-Expression; get-boxstarter -Force
-}
-
-function Install-Scoop {
+function Install-Apps {
     $SCOOP_PATH = "$HOME\scoop\shims\scoop"
     if (Test-Path $SCOOP_PATH) {
         Write-Host "Scoop already installed at $SCOOP_PATH"
+        scoop update
     }
     else {
         Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
     }
-}
 
-function Install-ScoopApps {
-    scoop update
-    scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nvm concfg
-    scoop bucket add extras
-    scoop update
-    scoop install vscode posh-git
-    Add-PoshGitToProfile
-}
+    scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nodejs-lts concfg
 
-function Install-ChocoApps {
-    cinst -y firefox autohotkey f.lux docker-desktop
+    $manualInstall = Read-Host 'Do you want to use scoop to install extra apps? [Y / N (default)]'
+    if ($manualInstall -eq "Y") {
+        scoop bucket add extras
+        scoop update
+        scoop install vscode posh-git firefox flux
+        Add-PoshGitToProfile
+    }
+    else {
+        Start-Process https://www.mozilla.org/en-US/firefox/new/
+        Start-Sleep -s 1
+        Start-Process https://github.com/dahlbyk/posh-git#installation
+        Start-Process https://justgetflux.com/
+        Start-Process https://visualstudio.microsoft.com/
+        Start-Process https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe
+    }
 }
 
 function Install-PowershellTheme {
@@ -212,17 +214,75 @@ function Install-PowershellTheme {
 }
 
 function Optimize-Explorer {
-    Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
+    Write-Host "Starting Explorer Optimizations..."
 
-    Disable-BingSearch
-    Disable-GameBarTips
-    Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -Lock
-    Set-TaskbarOptions -Size Small -Dock Bottom -Combine Full -AlwaysShowIconsOn
+    $key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer'
+    $advancedKey = "$key\Advanced"
+    $cabinetStateKey = "$key\CabinetState"
+    Set-ItemProperty $advancedKey Hidden 1
+    Set-ItemProperty $advancedKey HideFileExt 0
+    Set-ItemProperty $advancedKey ShowSuperHidden 1
+    Set-ItemProperty $cabinetStateKey FullPath 1
+
+    $path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
+
+    if (!(Test-Path $path)) {
+        New-Item $path
+    }
+
+    New-ItemProperty -LiteralPath $path -Name "BingSearchEnabled" -Value 0 -PropertyType "DWord" -ErrorAction SilentlyContinue
+    Set-ItemProperty -LiteralPath $path -Name "BingSearchEnabled" -Value 0
+
+    Write-Host "Bing search has been disabled."
+
+    $path = "HKCU:\SOFTWARE\Microsoft\GameBar"
+    if (!(Test-Path $path)) {
+        New-Item $path
+    }
+
+    New-ItemProperty -LiteralPath $path -Name "ShowStartupPanel" -Value 0 -PropertyType "DWord" -ErrorAction SilentlyContinue
+    Set-ItemProperty -LiteralPath $path -Name "ShowStartupPanel" -Value 0
+
+    Write-Host "GameBar Tips have been disabled."
 }
 
-function Install-VscodeExtensions {
-    Write-Host "Installing vscode extensions..."
-    Get-Content .\vscode-extensions.txt | ForEach-Object {code --install-extension $_}
+function Optimize-Dock {
+    Write-Host "Starting Explorer Optimizations..."
+
+    $explorerKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer'
+    $key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+    $settingKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects2'
+    if (-not (Test-Path -Path $settingKey)) {
+        $settingKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3'
+    }
+
+    if (Test-Path -Path $key) {
+        Set-ItemProperty $key TaskbarSizeMove 0 # Lock the taskbar - set to 1 to unlock
+        Set-ItemProperty $key TaskbarSmallIcons 1 # Small taskbar icons - set to 0 for normal size
+        Set-ItemProperty $key TaskbarGlomLevel 1 # Change taskbar icon combination style - 0 Always, 1 Full, 2 Never
+    }
+
+    if (Test-Path -Path $settingKey) {
+        $settings = (Get-ItemProperty -Path $settingKey -Name Settings).Settings
+        $settings[12] = 0x03 # Dock to bottom - 0x00 Left, 0x01 Top, 0x02 Right, 0x03 Bottom
+        Set-ItemProperty -Path $settingKey -Name Settings -Value $settings
+    }
+
+    if (Test-Path -Path $explorerKey) {
+        Set-ItemProperty -Path $explorerKey -Name 'EnableAutoTray' -Value 0 # Always show icons in the notification area - set 1 to combine under arrow 
+    }
+
+    Write-Host "Dock Optimizations Finished..."
+}
+
+function Install-VsCodeExtensions {
+    if (Get-Command code -errorAction SilentlyContinue) {
+        Write-Host "Installing vscode extensions..."
+        Get-Content .\vscode-extensions.txt | ForEach-Object {code --install-extension $_}
+    }
+    else {
+        Write-Host "VsCode has not been installed yet. Install it and re-run 'Install-VsCodeExtensions'"
+    }
 }
 
 function Install-Dotfiles {
@@ -251,21 +311,19 @@ function Install-AutoHotkey {
     $STARTUP_DIR = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     New-Item -Path "$STARTUP_DIR\vim.ahk" -ItemType SymbolicLink -Value .\windows\vim.ahk
 
-    cinst -y autohotkey
+    Start-Process https://www.autohotkey.com/download/
 }
 
 function Start-EnvironmentBootstrap {
-    Install-Boxstarter
     Remove-Bloatware
     Disable-Services
     Optimize-Explorer
+    Optimize-Dock
     Install-Dotfiles
-    Install-ChocoApps
 }
 
 function Start-EnvironmentConfig {
-    Install-Scoop
-    Install-ScoopApps
+    Install-Apps
     Install-PowershellTheme
-    Install-VscodeExtensions
+    Install-VsCodeExtensions
 }

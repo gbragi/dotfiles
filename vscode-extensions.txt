@@ -14,3 +14,4 @@ zxh404.vscode-proto3
 pflannery.vscode-versionlens
 christian-kohler.path-intellisense
 hbenl.vscode-firefox-debug
+ms-vscode.powershell
