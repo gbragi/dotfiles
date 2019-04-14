@@ -32,6 +32,11 @@ function gri() { git rebase -i origin/$args[0] }
 
 function gd() { git diff }
 
+function gcp() { 
+    git commit -a -m $args[0]
+    git push
+}
+
 function exp() { explorer . }
 
 Set-Alias k kubectl

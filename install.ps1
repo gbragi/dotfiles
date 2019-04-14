@@ -190,7 +190,7 @@ function Install-Apps {
         Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
     }
 
-    scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nodejs-lts concfg go
+    scoop install git sudo grep curl sed tar unzip touch which vim direnv dotnet-sdk nodejs-lts concfg go
 
     $installExtra = Read-Host 'Do you want to install extra apps? [Y / N (default)]'
     if ($installExtra -eq "Y") {
