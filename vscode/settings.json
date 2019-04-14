@@ -43,5 +43,7 @@
     "typescript.updateImportsOnFileMove.enabled": "always",
     "FSharp.fsacRuntime": "netcore",
     "dart.allowAnalytics": false,
-    "telemetry.enableTelemetry": false
+    "telemetry.enableTelemetry": false,
+    "dotnet-test-explorer.autoWatch": true,
+    "dotnet-test-explorer.autoExpandTree": true
 }

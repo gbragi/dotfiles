@@ -192,6 +192,8 @@ function Install-Apps {
 
     scoop install git sudo grep curl sed tar unzip touch which vim direnv dotnet-sdk nodejs-lts concfg go
 
+    dotnet tool install -g dotnet-format
+
     $installExtra = Read-Host 'Do you want to install extra apps? [Y / N (default)]'
     if ($installExtra -eq "Y") {
         scoop bucket add extras
