@@ -250,3 +250,8 @@ endif
 let &t_SI = "\<esc>[5 q"
 let &t_SR = "\<esc>[5 q"
 let &t_EI = "\<esc>[2 q"
+
+nmap <C-O> :vsc View.NavigateBackward<CR> 
+nmap <C-I> :vsc View.NavigateForward<CR> 
+vmap <C-O> :vsc View.NavigateBackward<CR> 
+vmap <C-I> :vsc View.NavigateForward<CR>

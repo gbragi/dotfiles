@@ -1,5 +1,4 @@
 {
-    "files.autoSave": "afterDelay",
     "editor.lineNumbers": "relative",
     "editor.wordWrap": "on",
     "git.autofetch": true,
@@ -41,5 +40,7 @@
         "suppressShowKeyBindingsNotice": true
     },
     "extensions.ignoreRecommendations": true,
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "FSharp.fsacRuntime": "netcore",
+    "dart.allowAnalytics": false,
 }

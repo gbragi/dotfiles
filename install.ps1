@@ -190,22 +190,24 @@ function Install-Apps {
         Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
     }
 
-    scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nodejs-lts concfg
+    scoop install git sudo grep curl sed tar touch which vim direnv dotnet-sdk nodejs-lts concfg go
 
-    $manualInstall = Read-Host 'Do you want to use scoop to install extra apps? [Y / N (default)]'
-    if ($manualInstall -eq "Y") {
+    $installExtra = Read-Host 'Do you want to install extra apps? [Y / N (default)]'
+    if ($installExtra -eq "Y") {
         scoop bucket add extras
         scoop update
-        scoop install vscode posh-git firefox flux
+        scoop install posh-git flux
         Add-PoshGitToProfile
-    }
-    else {
+
         Start-Process https://www.mozilla.org/en-US/firefox/new/
         Start-Sleep -s 1
-        Start-Process https://github.com/dahlbyk/posh-git#installation
-        Start-Process https://justgetflux.com/
+        # Start-Process https://github.com/dahlbyk/posh-git#installation
+        # Start-Process https://justgetflux.com/
         Start-Process https://visualstudio.microsoft.com/
-        Start-Process https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe
+        # Start-Process https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe
+    }
+    else {
+        Write-Host "Skipping extra apps"
     }
 }
 
@@ -221,7 +223,7 @@ function Optimize-Explorer {
     $cabinetStateKey = "$key\CabinetState"
     Set-ItemProperty $advancedKey Hidden 1
     Set-ItemProperty $advancedKey HideFileExt 0
-    Set-ItemProperty $advancedKey ShowSuperHidden 1
+    Set-ItemProperty $advancedKey ShowSuperHidden 0
     Set-ItemProperty $cabinetStateKey FullPath 1
 
     $path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
@@ -292,7 +294,7 @@ function Install-Dotfiles {
 
     New-Item -Path $env:APPDATA\Code\User\settings.json -ItemType SymbolicLink -Value .\vscode\settings.json -Force
 
-    New-Item -Path "$HOME\.vimrc" -ItemType SymbolicLink -Value .\vim\.vimrc -Force
+    New-Item -Path "$HOME\_vimrc" -ItemType SymbolicLink -Value .\vim\.vimrc -Force
 
     New-Item -Path $PROFILE -ItemType File -Force
     $PROFILE_DIR = (Get-Item $PROFILE).Directory.FullName

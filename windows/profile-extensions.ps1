@@ -7,6 +7,9 @@ $PSDefaultParameterValues["Out-File:Encoding"]="utf8"
 # Show selection menu for tab
 Set-PSReadlineKeyHandler -Chord Tab -Function MenuComplete
 
+# Powershell noise
+Set-PSReadlineOption -BellStyle None
+
 # Aliases
 #######################################################
 
@@ -24,6 +27,8 @@ function gc () { git commit }
 function gp () { git pull }
 
 function gd() { git diff }
+
+function exp() { explorer . }
 
 Set-Alias k kubectl
 
