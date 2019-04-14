@@ -24,7 +24,11 @@ function amend () { git commit --amend --no-edit }
 
 function gc () { git commit }
 
-function gp () { git pull }
+function gp () { git push }
+
+function gr() { git pull --rebase origin $args[0] }
+
+function gri() { git rebase -i origin/$args[0] }
 
 function gd() { git diff }
 
