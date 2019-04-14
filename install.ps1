@@ -328,6 +328,24 @@ function Install-GitToDotfilesRepo {
     }
 }
 
+function Remove-MediaDirs {
+    Write-Host "removing media directories from home directory"
+    Remove-Dir $HOME\Contacts
+    Remove-Dir $HOME\Videos
+    Remove-Dir $HOME\Music
+    Remove-Dir $HOME\Searches
+    Remove-Dir $HOME\Links
+    Remove-Dir $HOME\OneDrive
+    Remove-Dir $HOME\Pictures
+    Remove-Dir "$HOME\Saved Games"
+    Remove-Dir $HOME\Favorites
+    Remove-Dir "$HOME\3D Objects"
+}
+
+function Remove-Dir {
+    Remove-Item $args[0] -Recurse -Force -ErrorAction Ignore
+}
+
 function Start-EnvironmentBootstrap {
     Remove-Bloatware
     Disable-Services
