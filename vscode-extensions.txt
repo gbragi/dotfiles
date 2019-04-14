@@ -9,3 +9,4 @@ christian-kohler.path-intellisense
 jchannon.csharpextensions
 ionide.ionide-fsharp
 formulahendry.dotnet-test-explorer
+Fudge.auto-using
