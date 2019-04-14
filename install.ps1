@@ -316,6 +316,18 @@ function Install-AutoHotkey {
     Start-Process https://www.autohotkey.com/download/
 }
 
+function Install-GitToDotfilesRepo {
+    if (Test-Path -Path ".git") {
+        Write-Host "Git repo already initialized"
+    }
+    else {
+        mkdir .git
+        git clone https://github.com/gbragi/dotfiles .git
+        git pull
+        git reset head
+    }
+}
+
 function Start-EnvironmentBootstrap {
     Remove-Bloatware
     Disable-Services

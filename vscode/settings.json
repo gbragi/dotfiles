@@ -40,8 +40,8 @@
     "gitlens.advanced.messages": {
         "suppressShowKeyBindingsNotice": true
     },
-    "extensions.ignoreRecommendations": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "FSharp.fsacRuntime": "netcore",
-    "dart.allowAnalytics": false
+    "dart.allowAnalytics": false,
+    "telemetry.enableTelemetry": false
 }
