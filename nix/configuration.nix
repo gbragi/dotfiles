@@ -47,6 +47,8 @@
     vscode
     git
     stow
+    rustc
+    cargo
   ];
 
   environment.variables.EDITOR = "vim";

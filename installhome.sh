@@ -55,7 +55,7 @@ if [ "$RUNDOTFILES" = true ]; then
     CONFIG_DIR="$HOME/.config"
     SSH_CONFIG_DIR="$HOME/.ssh"
     mkdir -p "$SSH_CONFIG_DIR"
-    VSCODE_DIR="$CONFIG_DIR/Code - OSS/User"
+    VSCODE_DIR="$CONFIG_DIR/Code/User"
     BACKUP_DIR="./backup"
     I3_DIR="$CONFIG_DIR/i3"
     I3_BACKUP="$BACKUP_DIR/i3_backup_config"
