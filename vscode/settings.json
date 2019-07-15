@@ -41,5 +41,6 @@
     "FSharp.fsacRuntime": "netcore",
     "telemetry.enableTelemetry": false,
     "dotnet-test-explorer.autoWatch": true,
-    "dotnet-test-explorer.autoExpandTree": true
+    "dotnet-test-explorer.autoExpandTree": true,
+    "window.zoomLevel": 1
 }
