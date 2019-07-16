@@ -170,7 +170,9 @@ bar {
         status_command i3status
 }
 
-exec_always --no-startup-id blueman-applet
+exec --no-startup-id blueman-applet
+exec --no-startup-id redshift
+exec --no-startup-id pa-applet
 # exec --no-startup-id nm-applet
 
 # Gaps

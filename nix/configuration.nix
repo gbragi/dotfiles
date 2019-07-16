@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "bd"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -36,20 +36,24 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs;
   [
-    zsh
-    oh-my-zsh
     wget 
     vim
+    htop
     termite
     firefox-bin
     pavucontrol
+    killall
+    pa_applet
     blueman
     vscode
     git
     stow
     rustc
     cargo
+    dotnet-sdk
   ];
+
+  virtualisation.docker.enable = true;
 
   environment.variables.EDITOR = "vim";
   environment.variables.TERMINAL = "termite";
@@ -115,32 +119,42 @@
   #services.gnome3.seahorse.enable = true;
 
   # Enable zsh
-  programs.zsh.enable = true;
-  programs.zsh.interactiveShellInit = ''
-    export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
+  programs.zsh = {
+    enable = true;
+    syntaxHighlighting.enable = true;
+    autosuggestions.enable = true;
+    enableCompletion = true;
+    promptInit = "";
+    shellAliases = {
+      gs = "git status";
+      gd = "git diff";
+      ga = "git add";
+      gne = "git commit --amend --no-edit";
+      gc = "git commit";
+      gp = "git push";
+      gpf = "git push -f";
+      ll = "ls -l";
+    };
+    ohMyZsh = {
+      enable = true;
+      plugins = [ "git" "docker" "man" "sudo" "kubectl"];
+      theme = "terminalparty";
+    };
+  };
 
-    # Customize your oh-my-zsh options here
-    ZSH_THEME="terminalparty"
-    plugins=(git docker)
+  ## SERVICES
+  services.redshift = {
+    enable = true;
+    latitude = "64.126521";
+    longitude = "-21.817439";
+    temperature.day = 6500;
+    temperature.night = 2700;
+    brightness.night = "0.5";
+  };
 
-    HISTFILESIZE=500000
-    HISTSIZE=500000
-    setopt SHARE_HISTORY
-    setopt HIST_IGNORE_ALL_DUPS
-    setopt HIST_IGNORE_DUPS
-    setopt INC_APPEND_HISTORY
-    autoload -U compinit && compinit
-    unsetopt menu_complete
-    setopt completealiases
+  # services.unclutter.enable = true;
 
-    if [ -f ~/.aliases ]; then
-      source ~/.aliases
-    fi
-
-    source $ZSH/oh-my-zsh.sh
-  '';
-
-  programs.zsh.promptInit = ""; 
+  ## USERS
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bragi = {
@@ -148,7 +162,7 @@
     description = "Bragi Arnason";
     home = "/home/bragi";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "audio" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "audio" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
   # This value determines the NixOS release with which your system is to be
