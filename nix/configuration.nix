@@ -158,11 +158,12 @@
       gs = "git status";
       gd = "git diff";
       ga = "git add";
-      gne = "git commit --amend --no-edit";
+      gn = "git commit --amend --no-edit";
       gc = "git commit";
       gp = "git push";
       gpf = "git push -f";
-      gu = "git add . && git commit && git push";
+      gu = "ga . && gc && gp";
+      gun = "ga . && gn && gpf";
       ll = "ls -l";
       k = "kubectl";
       kdump = "kubectl get all --all-namespaces";
