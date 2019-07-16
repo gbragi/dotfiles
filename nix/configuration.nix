@@ -51,6 +51,35 @@
     rustc
     cargo
     dotnet-sdk
+    kubectl
+    k3docker
+  ];
+
+  nixpkgs.overlays = [
+    (self: super: with self; {
+      k3docker = buildGoModule rec {
+        name = "k3d";
+        version = "1.2.2";
+
+        src = fetchFromGitHub {
+            owner = "rancher";
+            repo = "k3d";
+            rev = "v${version}";
+            sha256 = "1wssmkf5a2d94fn13gkhg358bgl0h3zlxgcv0afq98i4m7jhnbbz";
+        };
+
+        modSha256 = "05cp20cd75v9hz8vlfasgkzsfcqshhskyc2k9yw3zjrl1pkks5b6"; 
+
+        subPackages = [ "." ]; 
+
+        meta = with lib; {
+            description = "Little helper to run Rancher Lab's k3s in Docker";
+            homepage = https://github.com/rancher/k3d;
+            license = licenses.mit;
+            platforms = platforms.linux ++ platforms.darwin;
+        };
+      };
+    })
   ];
 
   virtualisation.docker.enable = true;
@@ -151,8 +180,6 @@
     temperature.night = 2700;
     brightness.night = "0.5";
   };
-
-  # services.unclutter.enable = true;
 
   ## USERS
 
