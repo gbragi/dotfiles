@@ -62,6 +62,8 @@ if [ "$RUNDOTFILES" = true ]; then
     I3_CONFIG="$I3_DIR/config"
     PROFILE_CONFIG="$HOME/.profile"
     PROFILE_BACKUP="$BACKUP_DIR/profile_backup"
+    TERMITE_DIR="$CONFIG_DIR/termite"
+    mkdir -p "$TERMITE_DIR"
     mkdir -p "$BACKUP_DIR"
     
     echo stow vscode
@@ -76,6 +78,9 @@ if [ "$RUNDOTFILES" = true ]; then
     
     echo stow redshift
     stow redshift -t "$CONFIG_DIR"
+
+    echo stow termite
+    stow termite -t "$TERMITE_DIR"
     
     if [ -f "$PROFILE_CONFIG" ] && [ ! -L "$PROFILE_CONFIG" ]; then
         cp "$PROFILE_CONFIG" "$PROFILE_BACKUP"

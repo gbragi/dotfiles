@@ -162,7 +162,10 @@
       gc = "git commit";
       gp = "git push";
       gpf = "git push -f";
+      gu = "git add . && git commit && git push";
       ll = "ls -l";
+      k = "kubectl";
+      kdump = "kubectl get all --all-namespaces";
     };
     ohMyZsh = {
       enable = true;
