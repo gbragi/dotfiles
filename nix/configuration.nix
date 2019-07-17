@@ -54,6 +54,7 @@
     kubectl
     k3docker
     kubernetes-helm
+    glooctl
   ];
 
   nixpkgs.overlays = [
@@ -79,6 +80,20 @@
             license = licenses.mit;
             platforms = platforms.linux ++ platforms.darwin;
         };
+      };
+
+      glooctl = pkgs.stdenv.mkDerivation {
+          name = "glooctl";
+          src = pkgs.fetchurl {
+            url = "https://github.com/solo-io/gloo/releases/download/v0.17.1/glooctl-linux-amd64";
+            sha256 = "1c105ebc7ae4e5fe45340293524b6efac807aea6bfbb289c4018fee9ed7d774d";
+          };
+          phases = ["installPhase" "patchPhase"];
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $src $out/bin/glooctl
+            chmod +x $out/bin/glooctl
+          '';
       };
     })
   ];
@@ -159,12 +174,13 @@
       gs = "git status";
       gd = "git diff";
       ga = "git add";
+      gaa = "git add --all";
       gn = "git commit --amend --no-edit";
       gc = "git commit";
       gp = "git push";
       gpf = "git push -f";
-      gu = "ga . && gc && gp";
-      gun = "ga . && gn && gpf";
+      gu = "gaa && gc && gp";
+      gun = "gaa && gn && gpf";
       ll = "ls -l";
       k = "kubectl";
       kdump = "kubectl get all --all-namespaces";
