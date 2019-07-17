@@ -53,6 +53,7 @@
     dotnet-sdk
     kubectl
     k3docker
+    kubernetes-helm
   ];
 
   nixpkgs.overlays = [

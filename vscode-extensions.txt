@@ -7,3 +7,4 @@ formulahendry.dotnet-test-explorer
 jchannon.csharpextensions
 Fudge.auto-using
 eamodio.gitlens
+ms-kubernetes-tools.vscode-kubernetes-tools
