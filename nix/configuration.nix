@@ -55,6 +55,7 @@
     k3docker
     kubernetes-helm
     glooctl
+    rio
   ];
 
   nixpkgs.overlays = [
@@ -93,6 +94,20 @@
             mkdir -p $out/bin
             cp $src $out/bin/glooctl
             chmod +x $out/bin/glooctl
+          '';
+      };
+
+      rio = pkgs.stdenv.mkDerivation {
+          name = "rio";
+          src = pkgs.fetchurl {
+            url = "https://github.com/rancher/rio/releases/download/v0.2.0/rio-linux-amd64";
+            sha256 = "4fc55ca3800c9b39c0359b630f6892e31bedffe5b0dd7f5381e69c9f8a30279e";
+          };
+          phases = ["installPhase" "patchPhase"];
+          installPhase = ''
+            mkdir -p $out/bin
+            cp $src $out/bin/rio
+            chmod +x $out/bin/rio
           '';
       };
     })
