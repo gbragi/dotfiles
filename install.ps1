@@ -39,13 +39,13 @@ function Remove-Bloatware {
         # default Windows 10 apps
         "Microsoft.3DBuilder"
         "Microsoft.Appconnector"
-        #"Microsoft.Advertising.Xaml" 
         "Microsoft.BingFinance"
         "Microsoft.BingNews"
         "Microsoft.BingSports"
         "Microsoft.BingTranslator"
         "Microsoft.BingWeather"
         "Microsoft.FreshPaint"
+        "Microsoft.GamingServices"
         "Microsoft.Microsoft3DViewer"
         "Microsoft.MicrosoftOfficeHub"
         "Microsoft.MicrosoftSolitaireCollection"
@@ -67,7 +67,7 @@ function Remove-Bloatware {
         "Microsoft.WindowsMaps"
         "Microsoft.WindowsPhone"
         "Microsoft.WindowsSoundRecorder"
-        #"Microsoft.WindowsStore"
+        #"Microsoft.WindowsStore"   # can't be re-installed
         "Microsoft.XboxApp"
         "Microsoft.XboxGameOverlay"
         "Microsoft.XboxGamingOverlay"
@@ -76,7 +76,7 @@ function Remove-Bloatware {
         "Microsoft.ZuneMusic"
         "Microsoft.ZuneVideo"
     
-    
+
         # Threshold 2 apps
         "Microsoft.CommsPhone"
         "Microsoft.ConnectivityStore"
@@ -86,74 +86,65 @@ function Remove-Bloatware {
         "Microsoft.Office.Sway"
         "Microsoft.OneConnect"
         "Microsoft.WindowsFeedbackHub"
-
+    
         # Creators Update apps
         "Microsoft.Microsoft3DViewer"
         #"Microsoft.MSPaint"
-
+    
         #Redstone apps
         "Microsoft.BingFoodAndDrink"
         "Microsoft.BingTravel"
         "Microsoft.BingHealthAndFitness"
         "Microsoft.WindowsReadingList"
-
+    
         # Redstone 5 apps
         "Microsoft.MixedReality.Portal"
         "Microsoft.ScreenSketch"
         "Microsoft.XboxGamingOverlay"
         "Microsoft.YourPhone"
-
+    
         # non-Microsoft
-        "9E2F88E3.Twitter"
-        "PandoraMediaInc.29680B314EFC2"
-        "Flipboard.Flipboard"
-        "ShazamEntertainmentLtd.Shazam"
-        "king.com.CandyCrushSaga"
-        "king.com.CandyCrushSodaSaga"
-        "king.com.BubbleWitch3Saga"
-        "king.com.*"
-        "ClearChannelRadioDigital.iHeartRadio"
-        "4DF9E0F8.Netflix"
-        "6Wunderkinder.Wunderlist"
-        "Drawboard.DrawboardPDF"
         "2FE3CB00.PicsArt-PhotoStudio"
-        "D52A8D61.FarmVille2CountryEscape"
-        "TuneIn.TuneInRadio"
-        "GAMELOFTSA.Asphalt8Airborne"
-        "TheNewYorkTimes.NYTCrossword"
-        "DB6EA5DB.CyberLinkMediaSuiteEssentials"
-        "Facebook.Facebook"
-        "flaregamesGmbH.RoyalRevolt2"
-        "Playtika.CaesarsSlotsFreeCasino"
-        "A278AB0D.MarchofEmpires"
-        "KeeperSecurityInc.Keeper"
-        "ThumbmunkeysLtd.PhototasticCollage"
-        "XINGAG.XING"
-        "89006A2E.AutodeskSketchBook"
-        "D5EA27B7.Duolingo-LearnLanguagesforFree"
         "46928bounde.EclipseManager"
-        "ActiproSoftwareLLC.562882FEEB491" # next one is for the Code Writer from Actipro Software LLC
-        "DolbyLaboratories.DolbyAccess"
-        "SpotifyAB.SpotifyMusic"
-        "A278AB0D.DisneyMagicKingdoms"
-        "WinZipComputing.WinZipUniversal"
-        "CAF9E577.Plex"  
-        "7EE7776C.LinkedInforWindows"
+        "4DF9E0F8.Netflix"
         "613EBCEA.PolarrPhotoEditorAcademicEdition"
-        "Fitbit.FitbitCoach"
+        "6Wunderkinder.Wunderlist"
+        "7EE7776C.LinkedInforWindows"
+        "89006A2E.AutodeskSketchBook"
+        "9E2F88E3.Twitter"
+        "A278AB0D.DisneyMagicKingdoms"
+        "A278AB0D.MarchofEmpires"
+        "ActiproSoftwareLLC.562882FEEB491" # next one is for the Code Writer from Actipro Software LLC
+        "CAF9E577.Plex"  
+        "ClearChannelRadioDigital.iHeartRadio"
+        "D52A8D61.FarmVille2CountryEscape"
+        "D5EA27B7.Duolingo-LearnLanguagesforFree"
+        "DB6EA5DB.CyberLinkMediaSuiteEssentials"
         "DolbyLaboratories.DolbyAccess"
+        "DolbyLaboratories.DolbyAccess"
+        "Drawboard.DrawboardPDF"
+        "Facebook.Facebook"
+        "Fitbit.FitbitCoach"
+        "Flipboard.Flipboard"
+        "GAMELOFTSA.Asphalt8Airborne"
+        "KeeperSecurityInc.Keeper"
         "Microsoft.BingNews"
         "NORDCURRENT.COOKINGFEVER"
-
+        "PandoraMediaInc.29680B314EFC2"
+        "Playtika.CaesarsSlotsFreeCasino"
+        "ShazamEntertainmentLtd.Shazam"
+        "SpotifyAB.SpotifyMusic"
+        #"TheNewYorkTimes.NYTCrossword"
+        "ThumbmunkeysLtd.PhototasticCollage"
+        "TuneIn.TuneInRadio"
+        "WinZipComputing.WinZipUniversal"
+        "XINGAG.XING"
+        "flaregamesGmbH.RoyalRevolt2"
+        "king.com.*"
+        "king.com.BubbleWitch3Saga"
+        "king.com.CandyCrushSaga"
+        "king.com.CandyCrushSodaSaga"
     
-        # Additional packages
-        "*Dropbox*"
-        "*Facebook*"
-        "*Dell*"
-        "Microsoft.GetStarted"
-        "*Keeper*"
-
-
         # apps which cannot be removed using Remove-AppxPackage
         #"Microsoft.BioEnrollment"
         #"Microsoft.MicrosoftEdge"
@@ -163,15 +154,15 @@ function Remove-Bloatware {
         #"Microsoft.XboxIdentityProvider"
         #"Windows.ContactSupport"
     )
-
+    
     foreach ($app in $apps) {
         Write-Output "Trying to remove $app"
-
+    
         Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage -AllUsers
-
+    
         Get-AppXProvisionedPackage -Online |
-            Where-Object DisplayName -EQ $app |
-            Remove-AppxProvisionedPackage -Online
+        Where-Object DisplayName -EQ $app |
+        Remove-AppxProvisionedPackage -Online
     }
 
     $onedrive_setupfile = "C:\Windows\SysWOW64\OneDriveSetup.exe"
@@ -190,9 +181,7 @@ function Install-Apps {
         Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
     }
 
-    scoop install git sudo grep curl sed tar unzip touch which vim direnv dotnet-sdk nodejs-lts concfg go
-
-    dotnet tool install -g dotnet-format
+    scoop install grep curl unzip which vim
 
     $installExtra = Read-Host 'Do you want to install extra apps? [Y / N (default)]'
     if ($installExtra -eq "Y") {
@@ -282,7 +271,7 @@ function Optimize-Dock {
 function Install-VsCodeExtensions {
     if (Get-Command code -errorAction SilentlyContinue) {
         Write-Host "Installing vscode extensions..."
-        Get-Content .\vscode-extensions.txt | ForEach-Object {code --install-extension $_}
+        Get-Content .\vscode-extensions.txt | ForEach-Object { code --install-extension $_ }
     }
     else {
         Write-Host "VsCode has not been installed yet. Install it and re-run 'Install-VsCodeExtensions'"

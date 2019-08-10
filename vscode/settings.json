@@ -3,44 +3,9 @@
     "editor.lineNumbers": "relative",
     "editor.wordWrap": "on",
     "git.autofetch": true,
-    "vim.leader": "<space>",
-    "vim.useSystemClipboard": true,
-    "vim.easymotion": true,
-    "vim.insertModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "j",
-                "k"
-            ],
-            "after": [
-                "<Esc>"
-            ]
-        }
-    ],
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "j"
-            ],
-            "after": [
-                "g",
-                "j"
-            ]
-        },
-        {
-            "before": [
-                "k"
-            ],
-            "after": [
-                "g",
-                "k"
-            ]
-        }
-    ],
     "typescript.updateImportsOnFileMove.enabled": "always",
     "FSharp.fsacRuntime": "netcore",
     "telemetry.enableTelemetry": false,
     "dotnet-test-explorer.autoWatch": true,
     "dotnet-test-explorer.autoExpandTree": true,
-    "window.zoomLevel": 1
 }

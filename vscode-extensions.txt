@@ -1,10 +1,7 @@
 ms-vscode.csharp
-vscodevim.vim
 pflannery.vscode-versionlens
 christian-kohler.path-intellisense
 ionide.ionide-fsharp
 formulahendry.dotnet-test-explorer
 jchannon.csharpextensions
 Fudge.auto-using
-eamodio.gitlens
-ms-kubernetes-tools.vscode-kubernetes-tools
