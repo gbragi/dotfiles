@@ -183,19 +183,17 @@ function Install-Apps {
 
     scoop install grep curl unzip which vim
 
+    Start-Process https://www.mozilla.org/en-US/firefox/new/
+    Start-Sleep -s 1
+    # Start-Process https://github.com/dahlbyk/posh-git#installation
+    Start-Process https://visualstudio.microsoft.com/
+
     $installExtra = Read-Host 'Do you want to install extra apps? [Y / N (default)]'
     if ($installExtra -eq "Y") {
         scoop bucket add extras
         scoop update
-        scoop install posh-git flux
+        scoop install posh-git
         Add-PoshGitToProfile
-
-        Start-Process https://www.mozilla.org/en-US/firefox/new/
-        Start-Sleep -s 1
-        # Start-Process https://github.com/dahlbyk/posh-git#installation
-        # Start-Process https://justgetflux.com/
-        Start-Process https://visualstudio.microsoft.com/
-        # Start-Process https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe
     }
     else {
         Write-Host "Skipping extra apps"
