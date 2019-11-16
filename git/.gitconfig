@@ -4,4 +4,4 @@
 [core]
 	editor = vim
 [credential]
-	helper = manager
+	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
