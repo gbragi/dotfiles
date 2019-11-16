@@ -44,6 +44,7 @@ echo "Setting up dotfiles..."
 CONFIG_DIR="$HOME/.config"
 VSCODE_DIR="$CONFIG_DIR/Code/User"
 BACKUP_DIR="./backup"
+mkdir "$BACKUP_DIR"
 
 echo stow vscode
 mkdir -p "$VSCODE_DIR"
