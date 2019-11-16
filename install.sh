@@ -80,10 +80,10 @@ echo $(find $HOME -path ~/go -prune -o -xtype l)
 echo "All clear...good to go"
 
 # Disable caps lock and bind hjkl to arrow keys
-#echo stow keyboard layout
-#sudo mv -vn /usr/share/X11/xkb/symbols/us "$BACKUP_DIR/us_backup"
-#sudo mv -vn /usr/share/X11/xkb/symbols/is "$BACKUP_DIR/is_backup"
-#sudo stow keyboard -t /usr/share/X11/xkb/symbols
+echo stow keyboard layout
+sudo mv -vn /usr/share/X11/xkb/symbols/us "$BACKUP_DIR/us_backup"
+sudo mv -vn /usr/share/X11/xkb/symbols/is "$BACKUP_DIR/is_backup"
+sudo stow keyboard -t /usr/share/X11/xkb/symbols
 
 # Install vs code extensions
 echo "Installing vs code extensions"
