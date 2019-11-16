@@ -34,11 +34,16 @@ sudo apt install $(cat pkglist.txt)
 
 sudo snap install --classic code
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+if ! [ -x "$(command -v git)" ]; then
+    echo "setting up rust"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
 
-echo "Setting up zsh..."
-wget -q git.io/antigen -O antigen.zsh
-chsh -s $(which zsh)
+if [ "$SHELL" = "$(which zsh)" ]; then
+    echo "Setting up zsh..."
+    wget -q git.io/antigen -O antigen.zsh
+    chsh -s $(which zsh)
+fi
 
 # Install dotfiles
 # make symlinks from the home directory to files in ~/dotfiles
@@ -46,7 +51,7 @@ echo "Setting up dotfiles..."
 CONFIG_DIR="$HOME/.config"
 VSCODE_DIR="$CONFIG_DIR/Code/User"
 BACKUP_DIR="./backup"
-mkdir "$BACKUP_DIR"
+mkdir -p "$BACKUP_DIR"
 
 echo stow vscode
 mkdir -p "$VSCODE_DIR"
