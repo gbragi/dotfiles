@@ -44,9 +44,6 @@ echo "Setting up dotfiles..."
 CONFIG_DIR="$HOME/.config"
 VSCODE_DIR="$CONFIG_DIR/Code/User"
 BACKUP_DIR="./backup"
-#PROFILE_CONFIG="$HOME/.profile"
-#PROFILE_BACKUP="$BACKUP_DIR/profile_backup"
-#mkdir -p "$BACKUP_DIR"
 
 echo stow vscode
 mkdir -p "$VSCODE_DIR"
@@ -69,12 +66,12 @@ if [ ! -f "$LIBSECRET_DIR/git-credential-libsecret.o" ]; then
     popd
 fi
 
-#echo stow profile
-#if ! grep -q '.profile.customize' ~/.profile; then
-#    echo "# Customize profile" >> ~/.profile
-#    echo ". ~/.profile.customize" >> ~/.profile
-#fi
-#stow profile -t "$HOME"
+echo stow profile
+if ! grep -q '.profile.customize' ~/.profile; then
+   echo "# Customize profile" >> ~/.profile
+   echo ". ~/.profile.customize" >> ~/.profile
+fi
+stow profile -t "$HOME"
 
 # Do a check for all broken symlinks in home directory and print to stdout
 echo "Listing all broken symlinks"

@@ -24,3 +24,19 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme robbyrussell
 
 antigen apply
+
+# Custom aliases
+if [ -x "$(command -v hub)" ]; then eval "$(hub alias -s)"; fi
+alias g=git
+alias gu='git add . && git commit && git push'
+alias gs='git status'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit --amend'
+alias gcan='git commit --amend --no-edit'
+
+alias k='kubectl'
+alias kwp='watch kubectl get pods'
+alias kwpa='kwp --all-namespaces'
+alias kws='watch kubectl get services'
+alias kwsa='watch kubectl get services --all-namespaces'
