@@ -5,3 +5,4 @@ ionide.ionide-fsharp
 formulahendry.dotnet-test-explorer
 jchannon.csharpextensions
 Fudge.auto-using
+vscodevim.vim
