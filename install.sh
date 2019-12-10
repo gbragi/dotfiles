@@ -32,7 +32,8 @@ sudo apt upgrade
 sudo apt autoremove
 sudo apt install $(cat pkglist.txt)
 
-sudo snap install --classic code
+sudo snap install --classic code || true
+curl -sfL https://get.k3s.io | sh - --write-kubeconfig-mode 644
 
 if ! [ -x "$(command -v git)" ]; then
     echo "setting up rust"

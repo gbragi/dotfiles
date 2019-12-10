@@ -6,3 +6,4 @@ formulahendry.dotnet-test-explorer
 jchannon.csharpextensions
 Fudge.auto-using
 vscodevim.vim
+k--kato.intellij-idea-keybindings
