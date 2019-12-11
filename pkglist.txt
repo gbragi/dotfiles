@@ -5,7 +5,7 @@ curl
 zsh
 neovim
 apt-transport-https
-dotnet-sdk-3.0
+dotnet-sdk-3.1
 libsecret-1-0
 libsecret-1-dev
 azure-functions-core-tools

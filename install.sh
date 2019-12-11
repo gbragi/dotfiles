@@ -33,7 +33,9 @@ sudo apt autoremove
 sudo apt install $(cat pkglist.txt)
 
 sudo snap install --classic code || true
+sudo snap install node --classic --channel=12 || true
 curl -sfL https://get.k3s.io | sh - --write-kubeconfig-mode 644
+curl -fsSL https://get.pulumi.com | sh
 
 if ! [ -x "$(command -v git)" ]; then
     echo "setting up rust"
