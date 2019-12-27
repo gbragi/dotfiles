@@ -3,3 +3,6 @@ export PATH=$PATH:~/tools
 
 # add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
+
+# add dotnet
+export PATH=$PATH:$HOME/.dotnet
