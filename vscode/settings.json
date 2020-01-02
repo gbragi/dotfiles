@@ -8,4 +8,7 @@
     "telemetry.enableTelemetry": false,
     "dotnet-test-explorer.autoWatch": true,
     "dotnet-test-explorer.autoExpandTree": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "remimarsal.prettier-now"
+    }
 }

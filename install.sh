@@ -62,6 +62,9 @@ if [ -f "$I3_CONFIG" ] && [ ! -L "$I3_CONFIG" ]; then
 fi
 stow i3 -t "$I3_DIR"
 
+echo stow redshift
+stow redshfit -t "$CONFIG_DIR"
+
 echo stow profile
 if ! grep -q '.profile.customize' ~/.profile; then
    echo "# Customize profile" >> ~/.profile
