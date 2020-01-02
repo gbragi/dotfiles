@@ -1,6 +1,9 @@
+firefox
 stow
 qbittorrent
 zsh
 libsecret
 code
 redshift
+npm
+joplin

@@ -26,6 +26,7 @@ mkdir -p $TOOLS_DIR
 echo "Installing packages..."
 sudo pamac upgrade -a
 sudo pamac install --no-confirm $(<pkglist.txt)
+pamac build $(<aurpkglist.txt)
 
 ./dotnet/dotnet-install.sh
 
