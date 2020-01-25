@@ -6,4 +6,7 @@ libsecret
 code
 redshift
 npm
-joplin
+zlib
+plantuml
+remmina
+freerdp

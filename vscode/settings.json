@@ -10,5 +10,8 @@
     "dotnet-test-explorer.autoExpandTree": true,
     "[typescript]": {
         "editor.defaultFormatter": "remimarsal.prettier-now"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "remimarsal.prettier-now"
     }
 }

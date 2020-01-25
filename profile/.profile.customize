@@ -6,3 +6,6 @@ export PATH=$PATH:$HOME/.pulumi/bin
 
 # add dotnet
 export PATH=$PATH:$HOME/.dotnet
+
+# add yarn global tools
+export PATH=$PATH:$HOME/.yarn/bin

@@ -26,7 +26,7 @@ mkdir -p $TOOLS_DIR
 echo "Installing packages..."
 sudo pamac upgrade -a
 sudo pamac install --no-confirm $(<pkglist.txt)
-pamac build $(<aurpkglist.txt)
+#pamac build $(<aurpkglist.txt)
 
 ./dotnet/dotnet-install.sh
 
@@ -64,7 +64,7 @@ fi
 stow i3 -t "$I3_DIR"
 
 echo stow redshift
-stow redshfit -t "$CONFIG_DIR"
+stow redshift -t "$CONFIG_DIR"
 
 echo stow profile
 if ! grep -q '.profile.customize' ~/.profile; then

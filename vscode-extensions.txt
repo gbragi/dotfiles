@@ -11,3 +11,4 @@ ms-kubernetes-tools.vscode-kubernetes-tools
 ms-azuretools.vscode-docker
 zxh404.vscode-proto3
 remimarsal.prettier-now
+jebbs.plantuml
