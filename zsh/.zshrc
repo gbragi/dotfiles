@@ -40,3 +40,13 @@ alias kwp='watch kubectl get pods'
 alias kwpa='kwp --all-namespaces'
 alias kws='watch kubectl get services'
 alias kwsa='watch kubectl get services --all-namespaces'
+
+alias vim='nvim'
+alias v='nvim'
+
+if command -v kubectl &> /dev/null
+then
+    source <(kubectl completion zsh)
+    complete -F __start_kubectl k
+fi
+

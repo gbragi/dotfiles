@@ -1,7 +1,4 @@
 [user]
 	name = Bragi Arnason
-	email = 25616889+gbragi@users.noreply.github.com
 [core]
-	editor = vim
-[credential]
-	helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+	editor = nvim

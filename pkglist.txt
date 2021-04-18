@@ -1,11 +1,8 @@
 stow
-qbittorrent
-regolith-desktop 
 curl
 zsh
-neovim
 apt-transport-https
-dotnet-sdk-3.1
-libsecret-1-0
-libsecret-1-dev
-azure-functions-core-tools
+nodejs
+dotnet-sdk-5.0
+ripgrep
+fd-find

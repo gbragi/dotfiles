@@ -24,27 +24,30 @@ mkdir -p $TOOLS_DIR
 
 # Install packages
 echo "Installing packages..."
-sudo add-apt-repository -y ppa:kgilmer/regolith-stable
-wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
+
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+
 sudo apt update
 sudo apt upgrade
 sudo apt autoremove
 sudo apt install $(cat pkglist.txt)
 
-sudo snap install --classic code || true
-sudo snap install node --classic --channel=12 || true
-curl -sfL https://get.k3s.io | sh - --write-kubeconfig-mode 644
+#curl -sfL https://get.k3s.io | sh - --write-kubeconfig-mode 644
 curl -fsSL https://get.pulumi.com | sh
 
-if ! [ -x "$(command -v git)" ]; then
-    echo "setting up rust"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-fi
+echo "Install NeoVim"
+curl -Lo "$TOOLS_DIR/nvim" https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+chmod u+x "$TOOLS_DIR/nvim"
+curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+ln -s $(which fdfind) ~/.local/bin/fd
 
-if [ "$SHELL" = "$(which zsh)" ]; then
+
+if ! [ "$SHELL" = "$(which zsh)" ]; then
     echo "Setting up zsh..."
-    wget -q git.io/antigen -O antigen.zsh
+    curl -fLo antigen.zsh git.io/antigen
     chsh -s $(which zsh)
 fi
 
@@ -56,26 +59,20 @@ VSCODE_DIR="$CONFIG_DIR/Code/User"
 BACKUP_DIR="./backup"
 mkdir -p "$BACKUP_DIR"
 
-echo stow vscode
-mkdir -p "$VSCODE_DIR"
-stow vscode -t "$VSCODE_DIR"
+#echo stow vscode
+#mkdir -p "$VSCODE_DIR"
+#stow vscode -t "$VSCODE_DIR"
 
-#echo stow vim
-#stow vim -t "$HOME"
+echo stow vim
+NVIM_DIR="$CONFIG_DIR/nvim"
+mkdir -p "$NVIM_DIR"
+stow neovim -t "$NVIM_DIR"
 
 echo stow zshrc
 stow zsh -t "$HOME"
 
-echo stow git
-stow git -t "$HOME"
-
-LIBSECRET_DIR="/usr/share/doc/git/contrib/credential/libsecret"
-
-if [ ! -f "$LIBSECRET_DIR/git-credential-libsecret.o" ]; then
-    pushd "$LIBSECRET_DIR"
-    sudo make
-    popd
-fi
+#echo stow git
+#stow git -t "$HOME"
 
 echo stow profile
 if ! grep -q '.profile.customize' ~/.profile; then
@@ -91,17 +88,17 @@ echo $(find $HOME -path ~/go -prune -o -xtype l)
 echo "All clear...good to go"
 
 # Disable caps lock and bind hjkl to arrow keys
-echo stow keyboard layout
-sudo mv -vn /usr/share/X11/xkb/symbols/us "$BACKUP_DIR/us_backup"
-sudo mv -vn /usr/share/X11/xkb/symbols/is "$BACKUP_DIR/is_backup"
-sudo stow keyboard -t /usr/share/X11/xkb/symbols
+#echo stow keyboard layout
+#sudo mv -vn /usr/share/X11/xkb/symbols/us "$BACKUP_DIR/us_backup"
+#sudo mv -vn /usr/share/X11/xkb/symbols/is "$BACKUP_DIR/is_backup"
+#sudo stow keyboard -t /usr/share/X11/xkb/symbols
 
 # Install vs code extensions
-echo "Installing vs code extensions"
-readarray -t extensions < ./vscode-extensions.txt
+#echo "Installing vs code extensions"
+#readarray -t extensions < ./vscode-extensions.txt
 
-for i in "${extensions[@]}"
-do
-    echo "$i"
-    echo "yes" | code --install-extension "$i" || true
-done
+#for i in "${extensions[@]}"
+#do
+    #echo "$i"
+    #echo "yes" | code --install-extension "$i" || true
+#done
