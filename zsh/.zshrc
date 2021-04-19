@@ -50,3 +50,8 @@ then
     complete -F __start_kubectl k
 fi
 
+# tools dir
+export PATH=$PATH:~/tools
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
