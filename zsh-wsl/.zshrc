@@ -1,8 +1,17 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 bindkey -v
+
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 # zstyle :compinstall filename '/home/bragi/.zshrc'
@@ -12,21 +21,7 @@ bindkey -v
 # End of lines added by compinstall
 #
 
-# source ~/dotfiles/antigen.zsh
-
-# antigen use oh-my-zsh
-
-# antigen bundle git
-# antigen bundle command-not-found
-
-# antigen bundle zsh-users/zsh-syntax-highlighting
-
-# antigen theme robbyrussell
-
-# antigen apply
-
 # Custom aliases
-if [ -x "$(command -v hub)" ]; then eval "$(hub alias -s)"; fi
 alias g=git
 alias gu='git add . && git commit && git push'
 alias gs='git status'
@@ -56,4 +51,7 @@ export PATH=$PATH:~/tools
 # add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
 
-export TERMINAL=/usr/bin/alacritty
+source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

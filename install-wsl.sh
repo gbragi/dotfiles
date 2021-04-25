@@ -42,7 +42,7 @@ curl -Lo "$TOOLS_DIR/nvim" https://github.com/neovim/neovim/releases/download/ni
 chmod u+x "$TOOLS_DIR/nvim"
 curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-ln -s $(which fdfind) ~/.local/bin/fd
+ln -sfn $(which fdfind) ~/.local/bin/fd
 
 # Install dotfiles
 # make symlinks from the home directory to files in ~/dotfiles
@@ -52,17 +52,16 @@ VSCODE_DIR="$CONFIG_DIR/Code/User"
 BACKUP_DIR="./backup"
 mkdir -p "$BACKUP_DIR"
 
-#echo stow vscode
-#mkdir -p "$VSCODE_DIR"
-#stow vscode -t "$VSCODE_DIR"
-
 echo stow vim
 NVIM_DIR="$CONFIG_DIR/nvim"
 mkdir -p "$NVIM_DIR"
 stow neovim -t "$NVIM_DIR"
 
 echo stow zshrc
-stow zsh -t "$HOME"
+P10K_DIR="$HOME/.zsh/powerlevel10k"
+mkdir -p "$P10K_DIR"
+stow powerlevel10k -t "$P10K_DIR"
+stow zsh-wsl -t "$HOME"
 
 echo stow git
 stow git -t "$HOME"
@@ -73,25 +72,3 @@ if ! grep -q '.profile.customize' ~/.profile; then
    echo ". ~/.profile.customize" >> ~/.profile
 fi
 stow profile -t "$HOME"
-
-# Do a check for all broken symlinks in home directory and print to stdout
-echo "Listing all broken symlinks"
-echo $(find $HOME -path ~/go -prune -o -xtype l)
-
-echo "All clear...good to go"
-
-# Disable caps lock and bind hjkl to arrow keys
-#echo stow keyboard layout
-#sudo mv -vn /usr/share/X11/xkb/symbols/us "$BACKUP_DIR/us_backup"
-#sudo mv -vn /usr/share/X11/xkb/symbols/is "$BACKUP_DIR/is_backup"
-#sudo stow keyboard -t /usr/share/X11/xkb/symbols
-
-# Install vs code extensions
-#echo "Installing vs code extensions"
-#readarray -t extensions < ./vscode-extensions.txt
-
-#for i in "${extensions[@]}"
-#do
-    #echo "$i"
-    #echo "yes" | code --install-extension "$i" || true
-#done
