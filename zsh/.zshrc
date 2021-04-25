@@ -5,25 +5,25 @@ SAVEHIST=1000
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/bragi/.zshrc'
+# zstyle :compinstall filename '/home/bragi/.zshrc'
 
-autoload -Uz compinit
-compinit
+# autoload -Uz compinit
+# compinit
 # End of lines added by compinstall
 #
 
-source ~/dotfiles/antigen.zsh
+# source ~/dotfiles/antigen.zsh
 
-antigen use oh-my-zsh
+# antigen use oh-my-zsh
 
-antigen bundle git
-antigen bundle command-not-found
+# antigen bundle git
+# antigen bundle command-not-found
 
-antigen bundle zsh-users/zsh-syntax-highlighting
+# antigen bundle zsh-users/zsh-syntax-highlighting
 
-antigen theme robbyrussell
+# antigen theme robbyrussell
 
-antigen apply
+# antigen apply
 
 # Custom aliases
 if [ -x "$(command -v hub)" ]; then eval "$(hub alias -s)"; fi
@@ -55,3 +55,5 @@ export PATH=$PATH:~/tools
 
 # add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
+
+export TERMINAL=/usr/bin/alacritty

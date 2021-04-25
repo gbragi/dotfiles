@@ -64,8 +64,8 @@ stow neovim -t "$NVIM_DIR"
 echo stow zshrc
 stow zsh -t "$HOME"
 
-#echo stow git
-#stow git -t "$HOME"
+echo stow git
+stow git -t "$HOME"
 
 echo stow profile
 if ! grep -q '.profile.customize' ~/.profile; then

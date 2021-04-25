@@ -1,11 +1,8 @@
 {
     "files.autoSave": "afterDelay",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
     "editor.lineNumbers": "relative",
     "editor.wordWrap": "on",
     "git.autofetch": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "FSharp.fsacRuntime": "netcore",
-    "telemetry.enableTelemetry": false,
-    "dotnet-test-explorer.autoWatch": true,
-    "dotnet-test-explorer.autoExpandTree": true,
+    "telemetry.enableTelemetry": false
 }

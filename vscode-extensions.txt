@@ -1,12 +1,8 @@
-ms-vscode.csharp
+ms-dotnettools.csharp
 pflannery.vscode-versionlens
 christian-kohler.path-intellisense
 ionide.ionide-fsharp
-formulahendry.dotnet-test-explorer
-jchannon.csharpextensions
-Fudge.auto-using
-vscodevim.vim
+asvetliakov.vscode-neovim
 k--kato.intellij-idea-keybindings
 ms-kubernetes-tools.vscode-kubernetes-tools
-ms-azuretools.vscode-docker
 zxh404.vscode-proto3

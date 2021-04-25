@@ -1,0 +1,15 @@
+firefox
+stow
+qbittorrent
+redshift
+npm
+zlib
+plantuml
+remmina
+freerdp
+ripgrep
+fd
+github-cli
+zsh
+manjaro-zsh-config
+kubectl
