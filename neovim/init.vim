@@ -22,6 +22,14 @@ Plug 'dense-analysis/ale'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'valloric/MatchTagAlways'
+Plug 'jiangmiao/auto-pairs'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'junegunn/goyo.vim'
+
 call plug#end()
 
 set tabstop=4 softtabstop=4
@@ -85,30 +93,29 @@ nnoremap <leader>vrc :lua require('config.telescope').search_dotfiles()<CR>
 
 nnoremap <leader>gc :lua require('telescope.builtin').git_branches()<CR>
 
+nmap <C-_> <Plug>NERDCommenterToggle
+vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 
 nnoremap <C-j> :cn<CR>
 nnoremap <C-k> :cp<CR>
-
-nmap <C-_> <Plug>NERDCommenterToggle
-vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 
 augroup set_directory
   au!
   au VimEnter * silent! lcd %:p:h
 augroup END
 
-if has('patch-8.1.1880')
-  set completeopt=longest,menuone,popuphidden
-  " Highlight the completion documentation popup background/foreground the same as
-  " the completion menu itself, for better readability with highlighted
-  " documentation.
-  set completepopup=highlight:Pmenu,border:off
-else
+"if has('patch-8.1.1880')
+"set completeopt=longest,menuone,popuphidden
+"  " Highlight the completion documentation popup background/foreground the same as
+"  " the completion menu itself, for better readability with highlighted
+"  " documentation.
+"set completepopup=highlight:Pmenu,border:off
+"else
   set completeopt=longest,menuone,preview
   " Set desired preview window height for viewing documentation.
   set previewheight=5
-endif
-
+"endif
+"
 let g:ale_linters = { 'cs': ['OmniSharp'] }
 
 augroup omnisharp_commands

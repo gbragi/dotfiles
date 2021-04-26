@@ -39,12 +39,6 @@ alias kwsa='watch kubectl get services --all-namespaces'
 alias vim='nvim'
 alias v='nvim'
 
-if command -v kubectl &> /dev/null
-then
-    source <(kubectl completion zsh)
-    complete -F __start_kubectl k
-fi
-
 # tools dir
 export PATH=$PATH:~/tools
 
@@ -55,3 +49,9 @@ source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export KUBECONFIG=/mnt/c/Users/bragi/.kube/config
+
+complete -F __start_kubectl k
+
+fpath=(~/.zsh/completions $fpath)

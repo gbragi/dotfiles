@@ -4,5 +4,6 @@ zsh
 apt-transport-https
 nodejs
 dotnet-sdk-5.0
+dotnet-sdk-3.1
 ripgrep
 fd-find

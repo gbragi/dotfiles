@@ -42,7 +42,19 @@ curl -Lo "$TOOLS_DIR/nvim" https://github.com/neovim/neovim/releases/download/ni
 chmod u+x "$TOOLS_DIR/nvim"
 curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+mkdir -p ~/.local/bin
 ln -sfn $(which fdfind) ~/.local/bin/fd
+
+if ! [ "$SHELL" = "$(which zsh)" ]; then
+    echo "Setting up zsh..."
+    chsh -s $(which zsh)
+fi
+
+if command -v kubectl &> /dev/null; then
+    echo "Setting up zsh kubectl completions..."
+    mkdir -p ~/.zsh/completions
+    kubectl completion zsh >| ~/.zsh/completions/_kubectx
+fi
 
 # Install dotfiles
 # make symlinks from the home directory to files in ~/dotfiles
