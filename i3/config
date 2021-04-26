@@ -417,7 +417,7 @@ mode "$mode_gaps_outer" {
 }
 
 # Keyboard Layout
-exec --no-startup-id "setxkbmap -layout us,is -option 'grp:win_space_toggle'"
+exec --no-startup-id "setxkbmap -layout us,is -model pc105 -option 'grp:win_space_toggle'"
 
 # Disable beep
 exec --no-startup-id "xset -b"
