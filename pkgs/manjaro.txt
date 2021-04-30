@@ -13,3 +13,4 @@ github-cli
 zsh
 manjaro-zsh-config
 kubectl
+dotnet-sdk
