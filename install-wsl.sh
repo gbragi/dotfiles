@@ -75,8 +75,8 @@ mkdir -p "$P10K_DIR"
 stow powerlevel10k -t "$P10K_DIR"
 stow zsh-wsl -t "$HOME"
 
-echo stow git
-stow git -t "$HOME"
+echo copy git
+cp git/.gitconfig "$HOME"
 
 echo stow profile
 if ! grep -q '.profile.customize' ~/.profile; then
