@@ -1,4 +1,27 @@
+set path+=**
+
+" Nice menu when typing `:find *.py`
+set wildmode=longest,list,full
+set wildmenu
+" Ignore files
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
+
+
 call plug#begin('~/.vim/plugged')
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+Plug 'glepnir/lspsaga.nvim'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+Plug 'rust-lang/rust.vim'
 
 " Telescope
 Plug 'nvim-lua/popup.nvim'
@@ -12,15 +35,11 @@ Plug 'mbbill/undotree'
 " Color schemes
 Plug 'gruvbox-community/gruvbox'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-eunuch'
 
-Plug 'preservim/nerdcommenter'
-
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'dense-analysis/ale'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-test/vim-test'
 
 Plug 'valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
@@ -47,6 +66,7 @@ set nohlsearch
 set nohidden
 set autowriteall
 set autoread
+autocmd TextChanged,TextChangedI <buffer> silent write
 
 set noerrorbells
 set nowrap
@@ -62,7 +82,7 @@ set scrolloff=8
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set signcolumn=yes
-set colorcolumn=80
+" set colorcolumn=80
 
 " Give more space for displaying messages
 set cmdheight=2
@@ -75,11 +95,11 @@ set updatetime=50
 set shortmess+=c
 
 colorscheme gruvbox
+set background=dark
 " highlight Normal guibg=None
 
 nnoremap <SPACE> <Nop>
 let mapleader = " "
-
 
 imap jk <Esc>
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep for > ")})<CR>
@@ -93,79 +113,111 @@ nnoremap <leader>vrc :lua require('config.telescope').search_dotfiles()<CR>
 
 nnoremap <leader>gc :lua require('telescope.builtin').git_branches()<CR>
 
-nmap <C-_> <Plug>NERDCommenterToggle
-vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
-
 nnoremap <C-j> :cn<CR>
 nnoremap <C-k> :cp<CR>
+nnoremap ff :lua vim.lsp.buf.formatting()<CR>
 
-augroup set_directory
-  au!
-  au VimEnter * silent! lcd %:p:h
-augroup END
+nmap <C-_> gcc
+vmap <C-_> gc
 
-"if has('patch-8.1.1880')
-"set completeopt=longest,menuone,popuphidden
-"  " Highlight the completion documentation popup background/foreground the same as
-"  " the completion menu itself, for better readability with highlighted
-"  " documentation.
-"set completepopup=highlight:Pmenu,border:off
-"else
-  set completeopt=longest,menuone,preview
-  " Set desired preview window height for viewing documentation.
-  set previewheight=5
-"endif
-"
-let g:ale_linters = { 'cs': ['OmniSharp'] }
+" augroup set_directory
+"   au!
+"   au VimEnter * silent! lcd %:p:h
+" augroup END
 
-augroup omnisharp_commands
-  autocmd!
+nnoremap <silent> gh :Lspsaga lsp_finder<CR>
+nnoremap <silent><leader><Enter> :Lspsaga code_action<CR>
+vnoremap <silent><leader><Enter> :<C-U>Lspsaga range_code_action<CR>
+nnoremap <silent>K :Lspsaga hover_doc<CR>
+nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+nnoremap <silent> gs :Lspsaga signature_help<CR>
+nnoremap <silent>gr :Lspsaga rename<CR>
+nnoremap <silent> <leader>cd :Lspsaga show_line_diagnostics<CR>
+nnoremap <silent><leader>cc <cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
+nnoremap <silent> [e :Lspsaga diagnostic_jump_next<CR>
+nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
+nnoremap <silent> <A-d> :Lspsaga open_floaterm<CR>
+tnoremap <silent> <A-d> <C-\><C-n>:Lspsaga close_floaterm<CR>
 
-  " Show type information automatically when the cursor stops moving.
-  " Note that the type is echoed to the Vim command line, and will overwrite
-  " any other messages in this space including e.g. ALE linting messages.
-  autocmd CursorHold *.cs OmniSharpTypeLookup
+" Git fugitive
+nnoremap <leader>gs :G<CR>
+nnoremap <leader>gj :diffget //3<CR>
+nnoremap <leader>gf :diffget //2<CR>
 
-  " The following commands are contextual, based on the cursor position.
-  autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>fu <Plug>(omnisharp_find_usages)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>fi <Plug>(omnisharp_find_implementations)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>pd <Plug>(omnisharp_preview_definition)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>pi <Plug>(omnisharp_preview_implementations)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>t <Plug>(omnisharp_type_lookup)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>d <Plug>(omnisharp_documentation)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>fs <Plug>(omnisharp_find_symbol)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>fx <Plug>(omnisharp_fix_usings)
-  autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
-  autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+" Vim Test
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
 
-  " Navigate up and down by method/property/field
-  autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
-  autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
-  " Find all code errors/warnings for the current solution and populate the quickfix window
-  autocmd FileType cs nmap <silent> <buffer> <Leader>gcc <Plug>(omnisharp_global_code_check)
-  " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
-  autocmd FileType cs nmap <silent> <buffer> <Leader><Enter> <Plug>(omnisharp_code_actions)
-  autocmd FileType cs xmap <silent> <buffer> <Leader><Enter> <Plug>(omnisharp_code_actions)
-  " Repeat the last code action performed (does not use a selector)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_action_repeat)
-  autocmd FileType cs xmap <silent> <buffer> <Leader>. <Plug>(omnisharp_code_action_repeat)
+lua << EOF
+ local pid = vim.fn.getpid()
+ local omnisharp_bin = "/home/bragi/tools/omnisharp/run"
+ require'lspconfig'.omnisharp.setup{
+     cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
+ }
+EOF
 
-  autocmd FileType cs nmap <silent> <buffer> <Leader>= <Plug>(omnisharp_code_format)
 
-  autocmd FileType cs nmap <silent> <buffer> <Leader>r <Plug>(omnisharp_rename)
+lua << EOF
+-- Compe setup
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
 
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
-augroup END
+  source = {
+    path = true;
+    nvim_lsp = true;
+  };
+}
 
-" Enable snippet completion, using the ultisnips plugin
-" let g:OmniSharp_want_snippet=1
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
 
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+EOF
