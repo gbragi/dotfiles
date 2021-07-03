@@ -15,6 +15,7 @@ set wildignore+=**/.git/*
 
 call plug#begin('~/.vim/plugged')
 
+" Lsp tools
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'glepnir/lspsaga.nvim'
@@ -38,10 +39,10 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
 
 Plug 'vim-test/vim-test'
 
-Plug 'valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'vim-airline/vim-airline'
@@ -119,6 +120,17 @@ nnoremap ff :lua vim.lsp.buf.formatting()<CR>
 
 nmap <C-_> gcc
 vmap <C-_> gc
+
+augroup FTOptions
+  autocmd!
+  autocmd FileType c,cpp,cs,java          setlocal commentstring=//\ %s
+  autocmd FileType xml,xsd,xslt,javascript setlocal ts=2
+  autocmd FileType text,txt,mail          setlocal ai com=fb:*,fb:-,n:>
+  autocmd FileType sh,zsh,csh,tcsh        inoremap <silent> <buffer> <C-X>! #!/bin/<C-R>=&ft<CR>
+  autocmd FileType c,cpp,cs,java,perl,javscript,php,aspperl,tex,css let b:surround_101 = "\r\n}"
+  autocmd FileType liquid,markdown,text,txt setlocal tw=78 linebreak nolist
+augroup END
+
 
 " augroup set_directory
 "   au!

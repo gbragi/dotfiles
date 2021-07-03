@@ -12,12 +12,16 @@ SAVEHIST=1000
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
+# Enable bash completion compatibility mode
+autoload bashcompinit
+bashcompinit
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 # zstyle :compinstall filename '/home/bragi/.zshrc'
 
-# autoload -Uz compinit
-# compinit
+autoload -Uz compinit
+compinit
 # End of lines added by compinstall
 #
 
