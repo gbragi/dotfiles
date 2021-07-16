@@ -56,7 +56,6 @@ stow zsh-manjaro -t "$HOME"
 
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Setting up zsh..."
-    wget -q git.io/antigen -O antigen.zsh
     chsh -s $(which zsh)
 fi
 
@@ -72,24 +71,24 @@ stow neovim -t "$NVIM_DIR"
 echo stow git
 stow git -t "$HOME"
 
-echo stow i3
-stow i3 -t "$HOME/.i3"
+#echo stow i3
+#stow i3 -t "$HOME/.i3"
 
-echo stow redshift
-stow redshift -t "$CONFIG_DIR"
+#echo stow redshift
+#stow redshift -t "$CONFIG_DIR"
 
 # Disable caps lock and bind hjkl to arrow keys
 echo stow keyboard layout
-sudo rm /usr/share/X11/xkb/symbols/is
-sudo rm /usr/share/X11/xkb/symbols/us
+sudo mv /usr/share/X11/xkb/symbols/is "$BACKUP_DIR"
+sudo mv /usr/share/X11/xkb/symbols/us "$BACKUP_DIR"
 sudo stow keyboard -t /usr/share/X11/xkb/symbols
 
 # Install vs code extensions
-echo "Installing vs code extensions"
-readarray -t extensions < ./vscode-extensions.txt
-
-for i in "${extensions[@]}"
-do
-    echo "$i"
-    echo "yes" | code --install-extension "$i" || true
-done
+#echo "Installing vs code extensions"
+#readarray -t extensions < ./vscode-extensions.txt
+#
+#for i in "${extensions[@]}"
+#do
+#    echo "$i"
+#    echo "yes" | code --install-extension "$i" || true
+#done

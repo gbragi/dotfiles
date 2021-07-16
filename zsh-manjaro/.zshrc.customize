@@ -21,6 +21,6 @@ if [[ -e /usr/bin/kubectl ]]; then
     complete -F __start_kubectl k
 fi
 
-export TERMINAL=/usr/bin/alacritty
-export EDITOR=/usr/bin/nano
-export VISUAL=/usr/bin/nano
+#export TERMINAL=/usr/bin/alacritty
+export EDITOR=/usr/bin/nvim
+export VISUAL=/usr/bin/nvim
