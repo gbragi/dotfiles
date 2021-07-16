@@ -38,6 +38,7 @@ Plug 'gruvbox-community/gruvbox'
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
 
