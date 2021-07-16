@@ -1,6 +1,8 @@
 firefox
 stow
 qbittorrent
+ripgrep
+fd
 npm
 zlib
 plantuml
@@ -11,3 +13,5 @@ zsh
 manjaro-zsh-config
 kubectl
 dotnet-sdk
+ansible
+make

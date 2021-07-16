@@ -165,12 +165,15 @@ nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 
+autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp
+
 lua << EOF
  local pid = vim.fn.getpid()
  local omnisharp_bin = "/home/bragi/tools/omnisharp/run"
  require'lspconfig'.omnisharp.setup{
      cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
  }
+ require'lspconfig'.fsautocomplete.setup{}
 EOF
 
 
