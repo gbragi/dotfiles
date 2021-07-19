@@ -23,9 +23,13 @@ require('packer').startup(function()
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
   use 'tpope/vim-eunuch' -- vim sugar for common UNIX shell commands
   use 'tpope/vim-surround' -- ["surroundings"]
+  use 'tpope/vim-vinegar' -- Enhances or replaces netrw, the file manager
+  use 'tpope/vim-repeat' -- used with tpope (and more)'s plugins to make the repeat operator ('.') work on more operations
+  use 'tpope/vim-sleuth'
   -- use 'ludovicchabant/vim-gutentags' -- Automatic tags management
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } } }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'joshdick/onedark.vim' -- Theme inspired by Atom
   use 'itchyny/lightline.vim' -- Fancier statusline
   -- Add indentation guides even on blank lines
@@ -152,7 +156,19 @@ require('telescope').setup {
       },
     },
   },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  },
 }
+
+require('telescope').load_extension('fzf')
+
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-p>', [[<cmd>lua require('telescope.builtin').git_files()<CR>]], { noremap = true, silent = true })
