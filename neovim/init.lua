@@ -45,6 +45,8 @@ require('packer').startup(function()
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'folke/zen-mode.nvim' -- Zen mode
   use 'folke/twilight.nvim' -- Zen companion that highlights current section
+
+  use { 'ionide/Ionide-vim', run = 'make fsautocomplete' } -- FsAutocomplete is currently not working properly with ionide TODO: remove fsautocomplete from list of lsp servers
 end)
 
 -- Tabs/spaces
@@ -88,6 +90,9 @@ vim.o.breakindent = true
 
 --Save undo history
 vim.cmd [[set undofile]]
+
+--Set terminal title
+vim.o.title = true
 
 --Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
