@@ -4,7 +4,13 @@ export PATH=$PATH:~/tools
 # add Pulumi to the PATH
 export PATH=$PATH:~/.pulumi/bin
 
+# add rust to path
+export PATH=$PATH:~/.cargo/bin
+
 export BROWSER=/usr/bin/firefox
 export TERMINAL=/usr/bin/alacritty
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
+export PATH=~/.npm-global/bin:$PATH
+
+export _JAVA_AWT_WM_NONREPARENTING=1

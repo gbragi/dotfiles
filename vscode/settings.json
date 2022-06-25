@@ -4,5 +4,15 @@
     "editor.lineNumbers": "relative",
     "editor.wordWrap": "on",
     "git.autofetch": true,
-    "telemetry.enableTelemetry": false
+    "telemetry.enableTelemetry": false,
+    "vs-kubernetes": {
+        "vscode-kubernetes.helm-path.linux": "/home/bragi/.vs-kubernetes/tools/helm/linux-amd64/helm",
+        "vscode-kubernetes.minikube-path.linux": "/home/bragi/.vs-kubernetes/tools/minikube/linux-amd64/minikube"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }
